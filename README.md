@@ -15,4 +15,12 @@ O **Playout W 3.5** é uma solução gratuita e completa para o gerenciamento de
 - Automação e precisão na exibição de vídeos ao vivo.
 - Ideal para emissoras e criadores de conteúdo que buscam uma solução eficiente para suas transmissões.
 
+## Vídeo
+
+[![Playout W 3.5 Demo](https://img.youtube.com/vi/ML_-uZWY19Q/0.jpg)](https://www.youtube.com/watch?v=ML_-uZWY19Q&ab_channel=TopTau%C3%A1)
+
+## Imagem
+
+![Captura de Tela](captura_de_tela.png)  <!-- Caminho relativo da sua imagem local -->
+
 Experimente o Playout W 3.5 e leve suas transmissões ao próximo nível!
