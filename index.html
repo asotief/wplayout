@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playout W</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome CDN (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- mover iNTENS PLAY LIST -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.2/Sortable.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+     
+        #container {
+            height: 90px;
+            width: 160px;
+            background-color: #333;
+            padding: 7px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        #meter {
+            width: 150px;
+            height: 100px;
+            border-radius: 10%; /* Círculo */
+            overflow: hidden;
+            margin-top: 30px;
+            position: relative;
+            clip-path: circle(50% at 50% 100%); /* Meia-lua */
+            background-image: url('img.png'); /* Adiciona a imagem */
+            background-size: cover; /* Cobrir toda a área */
+            background-position: center; /* Centraliza a imagem */
+            background-repeat: no-repeat; /* Evita repetição da imagem */
+        }
+
+        #pointer {
+            width: 2px;
+            height: 60px;
+            background-color: white;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%); /* Centralizado horizontalmente */
+            bottom: 0;
+            border-radius: 0 0 5px 5px;
+            transform-origin: 50% 100%;
+            transition: transform 0.1s ease-in-out;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+            transform: rotate(-70deg); /* Inicialmente parado */
+        }
+
+        #hz-display {
+            font-size: 16px;
+            margin-top: -10px;
+            text-align: center;
+        }
+
+        #hz-display span {
+            font-weight: bold;
+            color: lightblue;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <!-- Black Bar with Controls, Clock, and Video Info -->
+        <div class="d-flex align-items-center justify-content-between black-bar mb-4">
+            	W PLAYOUT 3.5		
+			
+			<!-- Digital Clock -->
+           
+		   <div id="digitalClock" class="text-center">W PLAYOUT</div>
+            <!-- Controls: Play, Next, Stop, Trash, Upload -->
+            <div class="d-flex controls-section">
+			
+	
+          
+			
+			
+                <button class="btn btn-flat mx-2" id="startPlaylist" title="Iniciar Playlist">
+                    <i class="fas fa-play fa-2x"></i>
+                </button>
+                <button class="btn btn-flat mx-2" id="nextVideo" title="Próximo Vídeo">
+                    <i class="fas fa-forward fa-2x"></i>
+                </button>
+                <button class="btn btn-flat mx-2" id="stopButton" title="Parar">
+                    <i class="fas fa-stop fa-2x"></i>
+                </button>
+                <button class="btn btn-flat mx-2" id="clearPlaylist" title="Limpar Playlist">
+                    <i class="fas fa-trash fa-2x"></i>
+                </button>
+                <label for="videoUpload" class="btn btn-primary mx-2" title="Upload de Vídeo" style="font-size: 1.2rem;">
+                    <i class="fas fa-upload"></i> Enviar
+                </label>
+                <input type="file" id="videoUpload" class="d-none" accept="video/*" multiple>
+            </div>
+          
+            
+            <!-- Video Title and Duration -->
+            <div id="videoInfo" class="text-right">
+                <p><strong>Título:</strong> <span id="videoTitle">Nenhum vídeo</span></p>
+                <p><strong>Duração:</strong> <span id="videoDuration">0:00</span></p>
+            </div>
+        </div>
+
+
+		  
+        <div class="d-flex justify-content-between mb-3 video-section">
+            <!-- Preview Player -->
+            <div class="video-container d-flex flex-column align-items-center">
+                <video id="previewPlayer" class="border rounded" width="350" height="200" controls muted></video>
+                <div class="vu-meter" id="previewMeter">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+				
+            </div>
+			
+			 <!-- DIPLAY METER SOM (DESATIVADO POR ENQUANTO SÓ FUNCIONA NO NAVEGADOR) 
+  <div id="meter">
+                <div id="pointer"></div>
+                <div id="hz-display"><span>0</span> Hz</div>
+            </div>
+        <!-- VU Meters and Video Players -->
+			
+            <!-- Main Player -->
+            <div class="video-container d-flex flex-column align-items-center">
+                <video id="videoPlayer" class="border rounded" width="350" height="200" controls></video>
+                <div class="vu-meter" id="mainMeter">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Playlist Section -->
+        <h3 class="text-center">Playlist</h3>
+        <ul id="playlistContainer" class="list-group bg-dark text-light mb-3 playlist-scrollable"></ul>
+    </div>
+
+<!-- Rodapé -->
+<!-- Rodapé -->
+<footer style="background-color: #333; color: white; text-align: center; padding: 20px; margin-top: 20px;">
+    <p><strong>Playout W - Sistema GRATUITO de gerenciamento de vídeos</strong> para uso em OBS Studio ou outros programas que suportem essa tecnologia.</p>
+    <p>Inclui ferramentas exclusivas para playlists, monitoramento e controle de reprodução de vídeos ao vivo, totalmente sem custo.</p>
+    <p>Para saber mais sobre o projeto ou conversar sobre colaboração, entre em contato:</p>
+    <p><a href="mailto:ronieulefeitosa@gmail.com" style="color: lightblue;">ronieulefeitosa@gmail.com</a></p>
+</footer>
+
+
+
+
+
+    <script src="script.js"></script>
+    
+    <script>
+        const meter = document.getElementById('meter');
+        const pointer = document.getElementById('pointer');
+        const hzDisplay = document.getElementById('hz-display');
+        const hzDisplaySpan = hzDisplay.querySelector('span');
+
+        const audioCtx = new AudioContext();
+        const analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 2048;
+
+        const videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.addEventListener('play', () => {
+            const source = audioCtx.createMediaElementSource(videoPlayer);
+            source.connect(analyser);
+            analyser.connect(audioCtx.destination); // Conecta o analisador ao destino de áudio
+
+            function updateMeter() {
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                analyser.getByteFrequencyData(dataArray);
+
+                let maxAmp = 0;
+                let maxFreq = 0;
+
+                for (let i = 0; i < dataArray.length; i++) {
+                    const freq = audioCtx.sampleRate * i / analyser.fftSize;
+                    const amp = dataArray[i];
+                    if (amp > maxAmp) {
+                        maxAmp = amp;
+                        maxFreq = freq;
+                    }
+                }
+
+                const pointerRotation = Math.min((maxAmp / 255) * 0.9, 0.9) * (Math.PI / 2); // Normalize maxAmp
+                pointer.style.transform = `rotate(${pointerRotation}rad)`;
+                hzDisplaySpan.textContent = Math.round(maxFreq);
+            }
+
+            setInterval(updateMeter, 20);
+        });
+    </script>
+	
+
+
+    <!-- Conteúdo da página -->
+	
+	
+</body>
+</html>

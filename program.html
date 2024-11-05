@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Player</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e; /* Tema escuro */
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Impedir barras de rolagem */
+        }
+
+        video {
+            width: 100vw;  /* Largura 100% da tela */
+            height: 100vh; /* Altura 100% da tela */
+            object-fit: contain; /* Manter a proporção do vídeo sem cortar */
+            background-color: black; /* Plano de fundo preto para espaços vazios */
+        }
+    </style>
+</head>
+<body>
+    <!-- Program Video Player expansivo -->
+    <video id="programPlayer" autoplay></video>
+
+    <script>
+        const broadcastChannel = new BroadcastChannel('video_channel');
+        const programPlayer = document.getElementById('programPlayer');
+
+        broadcastChannel.onmessage = (event) => {
+            const message = event.data;
+
+            switch (message.action) {
+                case 'play':
+                    if (message.videoUrl) {
+                        if (programPlayer.src !== message.videoUrl) {
+                            programPlayer.src = message.videoUrl;
+                        }
+                        programPlayer.currentTime = message.currentTime || 0; // Use 0 se currentTime não for enviado
+                        programPlayer.play();
+                    }
+                    break;
+
+                case 'pause':
+                    programPlayer.pause();
+                    break;
+
+                case 'stop':
+                    programPlayer.pause();
+                    programPlayer.currentTime = 0;
+                    break;
+					
+                case 'ended':
+					programPlayer.pause();
+					break;
+				
+				case 'timeupdate': // Atualiza tempo, mas apenas se o vídeo estiver pronto.
+						if (programPlayer.readyState === 4) {
+							programPlayer.currentTime = message.currentTime;
+						}
+					break;
+
+				case 'seeking':
+                    programPlayer.pause();
+                    break;
+                case 'playing':
+                    programPlayer.play();
+                    break;
+				case 'waiting':
+                    programPlayer.pause();
+                    break;
+				case 'stalled':
+                    programPlayer.pause();
+                    break;
+				case 'loadeddata':
+					programPlayer.play();
+					break;
+                case 'ratechange':
+                   programPlayer.playbackRate = message.playbackRate;
+                   break;
+
+                case 'error':
+					console.error("Erro no vídeo principal:", message);
+					programPlayer.pause();
+                    break;
+
+                default:
+                    console.log('Ação desconhecida:', message);
+                    break;
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+ARQUIVO AQUI ADICIONADOS É PRA USAR EM CASO OFFLINE 
+
+EXEMPLO 
+
+ <!-- mover iNTENS PLAY LIST -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.2/Sortable.min.js"></script>
+
+TROCAR A URL NO INDEX.HTML POR LOCAL 
+
+<!-- mover iNTENS PLAY LIST -->
+    <script src="Sortable.min.js"></script>
+
+OS ARQUIVOS AQUI DEVE RODAR EM SERVIDOR LOCA PRA QUE TENHA UM BOM DESEMPENHO E PODER USAR 
+COMO PAINEL DE CONTROLE NO OBS 
+
+SEGUE TUTORIAL - https://youtu.be/ML_-uZWY19Q?si=utw5lnVndhh4f0Cg

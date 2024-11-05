@@ -1,0 +1,222 @@
+/* Tema escuro e moderno estilo OBS */
+body {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    padding-top: 60px; /* Ajuste conforme a altura da barra */
+}
+
+/* Importando a fonte Digital-Display */
+@font-face {
+    font-family: 'DigitalDisplay';
+    src: url('font-relogio/Digital-Display.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Black Bar Style */
+.black-bar {
+    background-color: #000;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed; /* Torna a barra fixa */
+    top: 0; /* Fixa na parte superior */
+    left: 0; /* Alinha à esquerda */
+    right: 0; /* Alinha à direita */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+/* Digital Clock */
+#digitalClock {
+    font-family: 'DigitalDisplay', monospace;
+    background-color: #000;
+    color: #00ff00;
+    font-size: 50px;
+    padding: 15px;
+    border-radius: 10px;
+    text-shadow: 0px 0px 10px #00ff00;
+}
+
+/* Controls Section */
+.controls-section {
+    display: flex;
+    align-items: center;
+}
+
+/* Video Info */
+#videoInfo {
+    color: white;
+    text-align: right;
+    margin-right: 10px;
+}
+
+/* Botões com estilo flat */
+button.btn-flat {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.2s;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+button.btn-flat:hover {
+    background-color: #555;
+}
+
+/* Ícones com espaçamento */
+button i {
+    font-size: 1.5rem;
+    margin-right: 5px;
+}
+
+/* Seção dos vídeos e medidores */
+.video-section {
+    display: flex;
+    justify-content: center; /* Centraliza os players */
+    gap: 10px; /* Controla a distância entre os players */
+    margin-bottom: 20px;
+}
+
+/* Estilos dos containers de vídeo */
+.video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px; /* Remove qualquer margem extra */
+}
+
+/* Forçando margens mínimas entre os players */
+.video-container + .video-container {
+    margin-left: 10px; /* Controla a distância mínima entre os dois players */
+}
+
+/* Controles de volume verticais */
+.volume-control {
+    width: 30px;
+    height: 120px;
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
+    margin-top: 10px;
+    background-color: #444;
+}
+
+/* Estilo do VU Meter */
+.vu-meter {
+    display: flex;
+    flex-direction: column-reverse; /* Para que as barras cresçam de baixo para cima */
+    justify-content: flex-start;
+    height: 200px;
+    width: 15px;
+    background-color: #222;
+    margin-left: 375px;
+    position: absolute;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Evita overflow nas barras */
+}
+
+.bar {
+    width: 100%;
+    height: 10%;
+    transition: background-color 0.2s ease, height 0.2s ease;
+    border-radius: 3px;
+}
+
+/* Barras "acendidas" */
+.bar.active:nth-child(-n + 85) { background-color: #00ff00; }  /* Verde aceso */
+.bar.active:nth-child(n + 5):nth-child(-n + 9) { background-color: #ffcc00; }  /* Amarelo aceso */
+.bar.active:nth-child(n + 10) { background-color: #ff4444; }  /* Vermelho aceso */
+
+/* Seção dos vídeos e medidores */
+.video-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+video {
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Estilos para a Playlist */
+#playlistContainer {
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #2a2a2a;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+#playlistContainer li {
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #2a2a2a;
+    transition: background-color 0.3s ease;
+}
+
+#playlistContainer li:hover {
+    background-color: #333;
+    cursor: pointer;
+}
+
+/* Vídeo tocando */
+.playing {
+    background-color: #ff4444 !important;
+    color: white;
+}
+
+/* Próximo vídeo */
+.next {
+    background-color: #00cc00 !important;
+    color: white;
+}
+
+/* Vídeo selecionado manualmente */
+.selected {
+    background-color: #ffcc00 !important;
+    color: black;
+}
+
+/* Vídeo já reproduzido */
+.played {
+    background-color: gray;
+    color: white;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+    .video-section {
+        flex-direction: column;
+    }
+
+    .video-container {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .black-bar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #videoInfo {
+        text-align: center;
+        margin-top: 10px;
+    }
+}
