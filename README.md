@@ -1,7 +1,7 @@
 # Playout W 3.5
 
 O **Playout W 3.5** é uma solução gratuita e completa para o gerenciamento de playlists ao vivo, ideal para quem trabalha com transmissões de vídeo em plataformas como o **OBS Studio**.
-
+Para falar diretamente comigo, é só clicar no link do meu perfil no Telegram (o talk directly with me, just click on the link to my Telegram profile): https://t.me/asotief_designs.
 ## Recursos
 
 - **Gerenciamento de Playlists:** Criação e controle de playlists de forma prática.
