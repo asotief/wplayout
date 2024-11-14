@@ -64,6 +64,9 @@
             font-weight: bold;
             color: lightblue;
         }
+		
+		
+		
     </style>
 </head>
 <body class="bg-dark text-light">
@@ -94,9 +97,10 @@
                 <button class="btn btn-flat mx-2" id="clearPlaylist" title="Limpar Playlist">
                     <i class="fas fa-trash fa-2x"></i>
                 </button>
-                <label for="videoUpload" class="btn btn-primary mx-2" title="Upload de Vídeo" style="font-size: 1.2rem;">
-                    <i class="fas fa-upload"></i> Enviar
-                </label>
+               <label for="videoUpload" class="btn btn-primary mx-2" title="Upload de Vídeo" style="font-size: 1.2rem;">
+    <i class="fas fa-upload" style="font-size: 2rem;"></i> <!-- Enviar -->
+</label>
+
                 <input type="file" id="videoUpload" class="d-none" accept="video/*" multiple>
             </div>
           
@@ -113,7 +117,7 @@
         <div class="d-flex justify-content-between mb-3 video-section">
             <!-- Preview Player -->
             <div class="video-container d-flex flex-column align-items-center">
-                <video id="previewPlayer" class="border rounded" width="350" height="200" controls muted></video>
+                <video id="previewPlayer" class="border rounded" width="350" height="200" controls muted></video>PRÉ-VISUALIZAÇÃO
                 <div class="vu-meter" id="previewMeter">
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -133,7 +137,7 @@
 			
             <!-- Main Player -->
             <div class="video-container d-flex flex-column align-items-center">
-                <video id="videoPlayer" class="border rounded" width="350" height="200" controls></video>
+                <video id="videoPlayer" class="border rounded" width="350" height="200" controls></video>PROGRAMA
                 <div class="vu-meter" id="mainMeter">
                     <div class="bar"></div>
                     <div class="bar"></div>

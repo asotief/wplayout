@@ -73,56 +73,81 @@ document.addEventListener("DOMContentLoaded", () => {
         return canvas.toDataURL();
     }
 
-    // Atualiza a playlist e exibe a hora de início de cada vídeo
-    function updatePlaylist() {
-        playlistContainer.innerHTML = "";
-        let cumulativeTime = startTime ? new Date(startTime) : new Date(); // Início da playlist
+   //NNNNNNNNNNNNNNNNNNNNNNN
+   
+// Atualiza a playlist e exibe a hora de início de cada vídeo
 
-        playlist.forEach((video, index) => {
-            const li = document.createElement('li');
-            li.classList.add('list-group-item', 'd-flex', 'align-items-center', 'justify-content-between');
+  function updatePlaylist() {
+    playlistContainer.innerHTML = "";
+    let cumulativeTime = startTime ? new Date(startTime) : new Date(); // Início da playlist
 
-            if (index === currentVideoIndex && isPlaying) {
-                li.classList.add('playing');
-            } else if (index === selectedVideoIndex) {
-                li.classList.add('selected');
-            } else if (video.played) {
-                li.classList.add('played');
-            }
+    playlist.forEach((video, index) => {
+        const li = document.createElement('li');
+        li.classList.add('list-group-item', 'd-flex', 'align-items-center', 'justify-content-between');
 
-            const videoInfo = document.createElement('div');
-            const thumbnailImg = document.createElement('img');
-            thumbnailImg.src = video.thumbnail;
-            thumbnailImg.width = 80;
-            thumbnailImg.classList.add('mr-2');
-            videoInfo.appendChild(thumbnailImg);
+        // Define as classes para os estados dos vídeos
+        if (index === currentVideoIndex && isPlaying) {
+            li.classList.add('playing');
+        } else if (index === selectedVideoIndex) {
+            li.classList.add('selected');
+        } else if (video.played) {
+            li.classList.add('played');
+        }
 
-            const startTimeString = cumulativeTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            const videoNameText = `${video.name} (Início: ${startTimeString})`;
+        const videoInfo = document.createElement('div');
+        const thumbnailImg = document.createElement('img');
+        thumbnailImg.src = video.thumbnail;
+        thumbnailImg.width = 80;
+        thumbnailImg.classList.add('mr-2');
+        videoInfo.appendChild(thumbnailImg);
 
-            videoInfo.appendChild(document.createTextNode(videoNameText));
-            li.appendChild(videoInfo);
+        // Formata o tempo de início e cria um elemento <span> para estilizar apenas o texto de tempo
+        const startTimeString = cumulativeTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const videoNameText = document.createTextNode(video.name + " ");
+        
+        // Cria o elemento de tempo com a classe `start-time` para estilização
+        const startTimeElement = document.createElement('span');
+        startTimeElement.classList.add('start-time');  // Classe para estilo específico
+        startTimeElement.textContent = `▶\u0020 ${startTimeString}`;   //original=//  startTimeElement.textContent = `Início: ${startTimeString}`;
 
-            cumulativeTime.setSeconds(cumulativeTime.getSeconds() + video.duration);
+        videoInfo.appendChild(videoNameText);
+        videoInfo.appendChild(startTimeElement);  // Adiciona o tempo estilizado
 
-            const deleteButton = document.createElement('button');
-            deleteButton.classList.add('btn', 'btn-danger', 'ml-2');
-            deleteButton.textContent = 'Excluir';
-            deleteButton.addEventListener('click', () => {
-                URL.revokeObjectURL(video.url);
-                removeVideo(index);
-            });
+        li.appendChild(videoInfo);
 
-            li.appendChild(deleteButton);
+        // Atualiza o tempo cumulativo para o próximo vídeo
+        cumulativeTime.setSeconds(cumulativeTime.getSeconds() + video.duration);
 
-            li.addEventListener('click', () => {
-                previewPlayer.src = video.url;
-                previewPlayer.play();
-            });
+      // Botão de exclusão com ícone
+const deleteButton = document.createElement('button');
+deleteButton.classList.add('btn', 'btn-danger', 'ml-2');
 
-            playlistContainer.appendChild(li);
+// Cria o ícone de lixeira
+const trashIcon = document.createElement('i');
+trashIcon.classList.add('fas', 'fa-trash');  // Usa o ícone de lixeira do Font Awesome
+
+// Adiciona o ícone ao botão
+deleteButton.appendChild(trashIcon);
+
+// Evento de clique
+deleteButton.addEventListener('click', () => {
+    URL.revokeObjectURL(video.url);
+    removeVideo(index);
+});
+
+li.appendChild(deleteButton);
+
+
+        // Ação ao clicar no item
+        li.addEventListener('click', () => {
+            previewPlayer.src = video.url;
+            previewPlayer.play();
         });
-    }
+
+        playlistContainer.appendChild(li);
+    });
+}
+
 
 
 

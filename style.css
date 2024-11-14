@@ -220,3 +220,14 @@ video {
         margin-top: 10px;
     }
 }
+
+
+/* Estilo para o texto "(Início: 00:00:00)" */
+.start-time {
+    font-size: 1em;
+    color: 	#1E90FF; /* Cor laranja para destaque */
+    background-color: #4B0082; /* Fundo claro */
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
